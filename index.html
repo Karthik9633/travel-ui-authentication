@@ -10,14 +10,32 @@
 </head>
 
 <body>
-<header class="head">
-    <h2>Travel App</h2>
-</header>
-<main class="container form-content">
-    <section class="card form-card">
-        <h4 class="text-center nb-3">Login</h4>
-    </section>
-</main>
+    <header class="head">
+        <h2>Travel App</h2>
+    </header>
+    <main class="container form-content">
+        <section class="card form-card">
+            <h4 class="text-center nb-3">Login</h4>
+
+            <form id="loginForm" novalidate>
+                <div class="mb-3">
+                    <input type="email" id="loginEmail" class="form-input" placeholder="Email">
+                    <small class="error"></small>
+                </div>
+
+                <div class="mb-3">
+                    <div class="input-group">
+                        <input type="password" id="loginPassword" class="form-input" placeholder="Password">
+                        <small class="error"></small>
+                        <button type="button" class="btn btn-outline-secondary"
+                            onclick="toggle('loginPassword')">👁</button>
+                    </div>
+                    <small class="error"></small>
+                </div>
+            </form>
+
+        </section>
+    </main>
 </body>
 
 </html>
