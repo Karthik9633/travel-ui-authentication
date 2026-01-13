@@ -4,15 +4,15 @@ function toggle(id) {
 }
 
 function showError(input, msg) {
-    const error = input.closest(".mb-3").querySelector(".error");
-    error.innerHTML = msg;
-    input.classList.add("is-invalid");
+    const error = input.closest(".mb-3").querySelector(".error")
+    error.innerHTML = msg
+    input.classList.add("is-invalid")
 }
 
 function clearError(input) {
-    const error = input.closest(".mb-3").querySelector(".error");
-    error.innerHTML = "";
-    input.classList.remove("is-invalid");
+    const error = input.closest(".mb-3").querySelector(".error")
+    error.innerHTML = ""
+    input.classList.remove("is-invalid")
 }
 
 const signupForm = document.getElementById("signupForm")
@@ -33,29 +33,32 @@ if (signupForm) {
         const phoneRegex = /^\d{10}$/
         const passwordREgex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/
 
-        if (!name.value.match(NAME_REGEX)) {
-            showError(name, "Only letters allowed");
-            valid = false;
-        } else clearError(name);
+        if (!name.value.match(nameRegex)) {
+            showError(name, "Only letters allowed")
+            valid = false
+        } else clearError(name)
 
-        if (!email.value.match(EMAIL_REGEX)) {
-            showError(email, "Invalid email");
-            valid = false;
-        } else clearError(email);
+        if (!email.value.match(emailRegex)) {
+            showError(email, "Invalid email")
+            valid = false
+        } else clearError(email)
 
-        if (!phone.value.match(PHONE_REGEX)) {
-            showError(phone, "10 digits required");
-            valid = false;
-        } else clearError(phone);
+        if (!phone.value.match(phoneRegex)) {
+            showError(phone, "10 digits required")
+            valid = false
+        } else clearError(phone)
 
-        if (!pass.value.match(PASSWORD_REGEX)) {
-            showError(pass, "Min 8 chars with letters & numbers");
-            valid = false;
-        } else clearError(pass);
+        if (!pass.value.match(passwordREgex)) {
+            showError(pass, "Min 8 chars with letters & numbers")
+            valid = false
+        } else clearError(pass)
 
         if (pass.value !== confirm.value) {
-            showError(confirm, "Passwords do not match");
-            valid = false;
-        } else clearError(confirm);
+            showError(confirm, "Passwords do not match")
+            valid = false
+        } else clearError(confirm)
+
+        localStorage.setItem("user", JSON.stringify({ email: email.value, password: pass.value }))
+        window.location.href = "SignIn.html"
     })
 }
