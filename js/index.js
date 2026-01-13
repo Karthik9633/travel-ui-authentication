@@ -60,5 +60,6 @@ if (signupForm) {
 
         localStorage.setItem("user", JSON.stringify({ email: email.value, password: pass.value }))
         window.location.href = "SignIn.html"
+        
     })
 }
