@@ -58,6 +58,8 @@ if (signupForm) {
             valid = false
         } else clearError(confirm)
 
+        if (!valid) return
+
         localStorage.setItem("user", JSON.stringify({ email: email.value, password: pass.value }))
         window.location.href = "index.html"
 
