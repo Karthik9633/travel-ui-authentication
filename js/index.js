@@ -27,5 +27,35 @@ if (signupForm) {
         const phone = document.getElementById("phone")
         const pass = document.getElementById("password")
         const confirm = document.getElementById("confirmPassword")
+
+        const nameRegex = /^[A-Za-z ]+$/
+        const emailRegex = /^\S+@\S+\.\S+$/
+        const phoneRegex = /^\d{10}$/
+        const passwordREgex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/
+
+        if (!name.value.match(NAME_REGEX)) {
+            showError(name, "Only letters allowed");
+            valid = false;
+        } else clearError(name);
+
+        if (!email.value.match(EMAIL_REGEX)) {
+            showError(email, "Invalid email");
+            valid = false;
+        } else clearError(email);
+
+        if (!phone.value.match(PHONE_REGEX)) {
+            showError(phone, "10 digits required");
+            valid = false;
+        } else clearError(phone);
+
+        if (!pass.value.match(PASSWORD_REGEX)) {
+            showError(pass, "Min 8 chars with letters & numbers");
+            valid = false;
+        } else clearError(pass);
+
+        if (pass.value !== confirm.value) {
+            showError(confirm, "Passwords do not match");
+            valid = false;
+        } else clearError(confirm);
     })
 }
