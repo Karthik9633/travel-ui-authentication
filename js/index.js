@@ -63,3 +63,29 @@ if (signupForm) {
 
     })
 }
+
+const signinForm = document.getElementById("signinForm")
+if (signinForm) {
+    signinForm.addEventListener("submit", e => {
+        e.preventDefault()
+        let valid = true
+
+        const email = document.getElementById("loginEmail")
+        const pass = document.getElementById("loginPassword")
+        const user = JSON.parse(localStorage.getItem("user"))
+
+        if (!user || user.email !== email.value) {
+            showError(email, "Email not registered")
+            valid = false;
+        }
+        else clearError(email)
+        if (!user || user.password !== pass.value) {
+            showError(pass, "Incorrect password")
+            valid = false;
+        }
+        else clearError(pass)
+
+        if (!valid) return
+        window.location.href = "travel.html"
+    });
+}
