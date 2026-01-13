@@ -59,7 +59,7 @@ if (signupForm) {
         } else clearError(confirm)
 
         localStorage.setItem("user", JSON.stringify({ email: email.value, password: pass.value }))
-        window.location.href = "SignIn.html"
-        
+        window.location.href = "index.html"
+
     })
 }
