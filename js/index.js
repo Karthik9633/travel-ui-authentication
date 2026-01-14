@@ -92,6 +92,16 @@ if (signinForm) {
     });
 }
 
+const inputs = document.querySelectorAll(
+    "#signupForm input, #signinForm input"
+)
+
+inputs.forEach(input => {
+    input.addEventListener("input", () => {
+        clearError(input)
+    })
+})
+
 const password = document.getElementById("password")
 const result = document.getElementById("result")
 
