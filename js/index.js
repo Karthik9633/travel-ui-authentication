@@ -61,8 +61,10 @@ if (signupForm) {
         if (!valid) return
 
         localStorage.setItem("user", JSON.stringify({ email: email.value, password: pass.value }))
-        window.location.href = "index.html"
 
+        setTimeout(() => {
+            window.location.href = "index.html"
+        }, 3000);
     })
 }
 
@@ -74,6 +76,7 @@ if (signinForm) {
 
         const email = document.getElementById("loginEmail")
         const pass = document.getElementById("loginPassword")
+        const message = document.getElementById("message")
         const user = JSON.parse(localStorage.getItem("user"))
 
         if (!user || user.email !== email.value) {
@@ -88,7 +91,13 @@ if (signinForm) {
         else clearError(pass)
 
         if (!valid) return
-        window.location.href = "travel.html"
+        setTimeout(() => {
+            window.location.href = "travel.html"
+        }, 3000);
+
+        message.innerHTML = "Login Successfull"
+        message.style.color = "#26d730"
+
     });
 }
 
