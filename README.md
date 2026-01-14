@@ -1,6 +1,6 @@
 # 🌍 Travel App Authentication & Landing Page
 
-🔗 Live Demo:https://github.com/Karthik9633/travel-ui-authentication
+🔗 Live Demo: https://github.com/Karthik9633/travel-ui-authentication
 
 A responsive Travel App project featuring **Signup, Signin authentication**, and a **modern travel landing page UI** with glassmorphism design and a responsive navigation bar.
 
