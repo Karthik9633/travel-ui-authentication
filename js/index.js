@@ -91,3 +91,42 @@ if (signinForm) {
         window.location.href = "travel.html"
     });
 }
+
+const password = document.getElementById("password")
+const result = document.getElementById("result")
+
+
+
+password.addEventListener('input', () => {
+
+    const length = password.value.length
+
+    if (length === 0) {
+        result.style.display = "block"
+        result.innerHTML = ""
+        password.style.border = ""
+
+        return
+
+    } else {
+        result.style.display = "block"
+    }
+
+    if (length < 6) {
+        result.innerHTML = "Password is weak"
+        password.style.border = "2px solid #ff5925"
+        result.style.color = "#ff5925"
+    }
+    else if (length >= 6 && length < 9) {
+        result.innerHTML = "Password is fair"
+        password.style.border = "2px solid yellow"
+        result.style.color = "yellow"
+    }
+
+    else {
+        result.innerHTML = "Password is strong"
+        password.style.border = "2px solid #26d730"
+        result.style.color = "#26d730"
+    }
+
+})
