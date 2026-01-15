@@ -95,6 +95,8 @@ if (signupForm) {
         e.preventDefault()
         let valid = true
 
+        const text = document.getElementById("msg")
+
         if (!inputCheck(name)) valid = false
         if (!inputCheck(email)) valid = false
         if (!inputCheck(phone)) valid = false
@@ -114,9 +116,12 @@ if (signupForm) {
             password: pass.value
         }))
 
+        text.innerHTML = `✅Congratulations ${name.value}! You have signed up sucessfully`
+        text.style.color = "#26d730"
+
          setTimeout(() => {
             window.location.href = "index.html"
-        }, 3000)
+        }, 5000)
     })
 }
 
