@@ -15,137 +15,143 @@ function clearError(input) {
     input.classList.remove("is-invalid")
 }
 
+function inputCheck(input) {
+    if (input.value.trim() === "") {
+        showError(input,"This field cannot be empty")
+        return false
+    }
+    return true
+}
+
+const nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/
+const emailRegex = /^\S+@\S+\.\S+$/
+const phoneRegex = /^[6-9]\d{9}$/ 
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/
+
 const signupForm = document.getElementById("signupForm")
 
 if (signupForm) {
-    signupForm.addEventListener('submit', e => {
+    const name = document.getElementById("name")
+    const email = document.getElementById("email")
+    const phone = document.getElementById("phone")
+    const pass = document.getElementById("password")
+    const confirm = document.getElementById("confirmPassword")
+    const result = document.getElementById("result")
+
+    name.addEventListener("input", () => {
+        if (!inputCheck(name)) return
+        if (!name.value.match(nameRegex)) {
+            showError(name, "Only letters allowed (A-Z,a-z) ")
+        } else clearError(name)
+    })
+
+    email.addEventListener("input", () => {
+        if (!inputCheck(email)) return
+        if (!email.value.match(emailRegex)) {
+            showError(email, "Invalid email")
+        } else clearError(email)
+    })
+
+    phone.addEventListener("input", () => {
+        phone.value = phone.value.replace(/\D/g, "")
+        if (!inputCheck(phone)) return
+        if (!phone.value.match(phoneRegex)) {
+            showError(phone, "Enter valid Indian mobile number")
+        } else clearError(phone)
+    })
+
+    pass.addEventListener("input", () => {
+        if (!inputCheck(pass)) return
+
+        const len = pass.value.length
+        if (len < 6) {
+            result.innerHTML = "Password is weak"
+            result.style.color = "#ff5925"
+        } else if (len < 9) {
+            result.innerHTML = "Password is fair"
+            result.style.color = "orange"
+        } else {
+            result.innerHTML = "Password is strong"
+            result.style.color = "#26d730"
+        }
+
+        if (!pass.value.match(passwordRegex)) {
+            showError(pass, "Min 8 chars with letters & numbers")
+        } else clearError(pass)
+
+        if (confirm.value && pass.value !== confirm.value) {
+            showError(confirm, "Passwords do not match")
+        } else clearError(confirm)
+    })
+
+    confirm.addEventListener("input", () => {
+        if (!inputCheck(confirm)) return
+        if (pass.value !== confirm.value) {
+            showError(confirm, "Passwords do not match")
+        } else clearError(confirm)
+    })
+
+    signupForm.addEventListener("submit", e => {
         e.preventDefault()
         let valid = true
 
-        const name = document.getElementById("name")
-        const email = document.getElementById("email")
-        const phone = document.getElementById("phone")
-        const pass = document.getElementById("password")
-        const confirm = document.getElementById("confirmPassword")
+        if (!inputCheck(name)) valid = false
+        if (!inputCheck(email)) valid = false
+        if (!inputCheck(phone)) valid = false
+        if (!inputCheck(pass)) valid = false
+        if (!inputCheck(confirm)) valid = false
 
-        const nameRegex = /^[A-Za-z ]+$/
-        const emailRegex = /^\S+@\S+\.\S+$/
-        const phoneRegex = /^\d{10}$/
-        const passwordREgex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/
-
-        if (!name.value.match(nameRegex)) {
-            showError(name, "Only letters allowed")
-            valid = false
-        } else clearError(name)
-
-        if (!email.value.match(emailRegex)) {
-            showError(email, "Invalid email")
-            valid = false
-        } else clearError(email)
-
-        if (!phone.value.match(phoneRegex)) {
-            showError(phone, "10 digits required")
-            valid = false
-        } else clearError(phone)
-
-        if (!pass.value.match(passwordREgex)) {
-            showError(pass, "Min 8 chars with letters & numbers")
-            valid = false
-        } else clearError(pass)
-
-        if (pass.value !== confirm.value) {
-            showError(confirm, "Passwords do not match")
-            valid = false
-        } else clearError(confirm)
+        if (!name.value.match(nameRegex)) valid = false
+        if (!email.value.match(emailRegex)) valid = false
+        if (!phone.value.match(phoneRegex)) valid = false
+        if (!pass.value.match(passwordRegex)) valid = false
+        if (pass.value !== confirm.value) valid = false
 
         if (!valid) return
 
-        localStorage.setItem("user", JSON.stringify({ email: email.value, password: pass.value }))
+        localStorage.setItem("user", JSON.stringify({
+            email: email.value,
+            password: pass.value
+        }))
 
-        setTimeout(() => {
+         setTimeout(() => {
             window.location.href = "index.html"
-        }, 3000);
+        }, 3000)
     })
 }
 
 const signinForm = document.getElementById("signinForm")
+
 if (signinForm) {
     signinForm.addEventListener("submit", e => {
         e.preventDefault()
-        let valid = true
 
         const email = document.getElementById("loginEmail")
         const pass = document.getElementById("loginPassword")
         const message = document.getElementById("message")
         const user = JSON.parse(localStorage.getItem("user"))
 
-        if (!user || user.email !== email.value) {
-            showError(email, "Email not registered")
-            valid = false;
-        }
-        else clearError(email)
-        if (!user || user.password !== pass.value) {
-            showError(pass, "Incorrect password")
-            valid = false;
-        }
-        else clearError(pass)
+        let valid = true
 
+        if (!inputCheck(email)) valid = false
+        if (!inputCheck(pass)) valid = false
         if (!valid) return
-        setTimeout(() => {
-            window.location.href = "travel.html"
-        }, 3000);
 
-        message.innerHTML = "Login Successfull"
+        if (!user || !email.value.match(emailRegex) || user.email !== email.value) {
+            showError(email, "Email not registered")
+            return
+        } else clearError(email)
+
+        if (user.password !== pass.value) {
+            showError(pass, "Incorrect password")
+            return
+        } else clearError(pass)
+
+        message.innerHTML = "Login Successful"
         message.style.color = "#26d730"
 
-    });
-}
-
-const inputs = document.querySelectorAll(
-    "#signupForm input, #signinForm input"
-)
-
-inputs.forEach(input => {
-    input.addEventListener("input", () => {
-        clearError(input)
+        setTimeout(() => {
+            window.location.href = "travel.html"
+        }, 3000)
     })
-})
-
-const password = document.getElementById("password")
-const result = document.getElementById("result")
-
-
-
-password.addEventListener('input', () => {
-
-    const length = password.value.length
-
-    if (length === 0) {
-        result.style.display = "block"
-        result.innerHTML = ""
-        password.style.border = ""
-
-        return
-
-    } else {
-        result.style.display = "block"
-    }
-
-    if (length < 6) {
-        result.innerHTML = "Password is weak"
-        password.style.border = "2px solid #ff5925"
-        result.style.color = "#ff5925"
-    }
-    else if (length >= 6 && length < 9) {
-        result.innerHTML = "Password is fair"
-        password.style.border = "2px solid yellow"
-        result.style.color = "yellow"
-    }
-
-    else {
-        result.innerHTML = "Password is strong"
-        password.style.border = "2px solid #26d730"
-        result.style.color = "#26d730"
-    }
-
-})
+}
